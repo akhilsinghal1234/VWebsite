@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(168, 85, 247, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .heart {
+            font-size: 4em;
+            margin: 20px 0;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+        }
+
+        .buttons {
+            margin-top: 40px;
+            position: relative;
+            height: 180px;
+            width: 100%;
+        }
+
+        button {
+            font-size: 1.3em;
+            padding: 15px 40px;
+            margin: 10px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #yesBtn:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #666;
+            position: absolute;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: left 0.3s ease, top 0.3s ease;
+        }
+
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(168, 85, 247, 0.6);
+            backdrop-filter: blur(20px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .celebration-content {
+            text-align: center;
+        }
+
+        .celebration h2 {
+            font-size: 4em;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .celebration .hearts {
+            font-size: 3em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .bitmoji-container img {
+                width: 150px !important;
+                height: 150px !important;
+            }
+            .heart {
+                font-size: 3em;
+            }
+            button {
+                font-size: 1.1em;
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will You Be My Valentine?</h1>
+        <div class="bitmoji-container" style="margin: 20px 0;">
+            <img src="snapchat.jpeg" alt="Bitmoji" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid rgba(255, 255, 255, 0.5); box-shadow: 0 8px 20px rgba(0,0,0,0.2);">
+        </div>
+        <div class="heart">🌹</div>
+        <div class="buttons">
+            <button id="yesBtn">Yes! 💕</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration">
+        <div class="celebration-content">
+            <h2>Yay! 🎉</h2>
+            <div class="hearts">💝</div>
+            <p style="font-size: 1.5em; color: #fff; margin-top: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                I knew you'd say yes! ❤️
+            </p>
+            <button id="askAgainBtn" style="margin-top: 30px; font-size: 1.2em; padding: 15px 30px; border: 2px solid white; border-radius: 50px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); color: white; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
+                Ask Me Again 💕
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const celebration = document.getElementById('celebration');
+        const container = document.querySelector('.container');
+        const buttonsContainer = document.querySelector('.buttons');
+
+        let noBtnRect = noBtn.getBoundingClientRect();
+        
+        function moveButton(mouseX, mouseY) {
+            const buttonsRect = buttonsContainer.getBoundingClientRect();
+            const buttonWidth = noBtn.offsetWidth;
+            const buttonHeight = noBtn.offsetHeight;
+            
+            // Get current button position relative to buttons container
+            const currentLeft = parseFloat(noBtn.style.left) || 0;
+            const currentTop = parseFloat(noBtn.style.top) || 0;
+            const btnCenterX = currentLeft + buttonWidth / 2;
+            const btnCenterY = currentTop + buttonHeight / 2;
+            
+            // Mouse position relative to buttons container
+            const mouseRelX = mouseX - buttonsRect.left;
+            const mouseRelY = mouseY - buttonsRect.top;
+            
+            // Calculate direction away from mouse
+            const deltaX = btnCenterX - mouseRelX;
+            const deltaY = btnCenterY - mouseRelY;
+            const angle = Math.atan2(deltaY, deltaX);
+            
+            // Move button far away in opposite direction
+            const distance = 150 + Math.random() * 100; // 150-250px away
+            let newX = btnCenterX + Math.cos(angle) * distance;
+            let newY = btnCenterY + Math.sin(angle) * distance;
+            
+            // Bounds within buttons container
+            const padding = 10;
+            const maxX = buttonsRect.width - buttonWidth - padding;
+            const maxY = buttonsRect.height - buttonHeight - 60; // Leave space for Yes button
+            
+            newX = Math.max(padding, Math.min(newX, maxX));
+            newY = Math.max(padding, Math.min(newY, maxY));
+            
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+
+        // Move button when mouse gets close
+        document.addEventListener('mousemove', (e) => {
+            noBtnRect = noBtn.getBoundingClientRect();
+            const distance = Math.sqrt(
+                Math.pow(e.clientX - (noBtnRect.left + noBtnRect.width / 2), 2) +
+                Math.pow(e.clientY - (noBtnRect.top + noBtnRect.height / 2), 2)
+            );
+            
+            // If mouse is within 150px of the button, move it away
+            if (distance < 150) {
+                moveButton(e.clientX, e.clientY);
+            }
+        });
+
+        // Also move on touch for mobile
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            moveButton(touch.clientX, touch.clientY);
+        });
+
+        // Prevent clicking No button
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveButton(e.clientX, e.clientY);
+        });
+
+        // Yes button celebration
+        yesBtn.addEventListener('click', () => {
+            celebration.style.display = 'flex';
+            
+            // Create floating hearts
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => createFloatingHeart(), i * 100);
+            }
+        });
+
+        // Ask Again button
+        const askAgainBtn = document.getElementById('askAgainBtn');
+        askAgainBtn.addEventListener('click', () => {
+            celebration.style.display = 'none';
+            // Reset No button to center of buttons area
+            const buttonsRect = buttonsContainer.getBoundingClientRect();
+            const randomX = Math.random() * (buttonsRect.width - noBtn.offsetWidth - 20) + 10;
+            const randomY = Math.random() * 100 + 10;
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        });
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.textContent = ['💕', '💝', '💖', '💗', '💓'][Math.floor(Math.random() * 5)];
+            heart.style.position = 'fixed';
+            heart.style.fontSize = '2em';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = window.innerHeight + 'px';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '999';
+            document.body.appendChild(heart);
+            
+            const duration = 3000 + Math.random() * 2000;
+            const start = Date.now();
+            
+            function animate() {
+                const elapsed = Date.now() - start;
+                const progress = elapsed / duration;
+                
+                if (progress < 1) {
+                    heart.style.top = (window.innerHeight - progress * (window.innerHeight + 100)) + 'px';
+                    heart.style.opacity = 1 - progress;
+                    requestAnimationFrame(animate);
+                } else {
+                    heart.remove();
+                }
+            }
+            animate();
+        }
+
+        // Initial position for No button - center of buttons area
+        const buttonsRect = buttonsContainer.getBoundingClientRect();
+        const initialX = (buttonsRect.width / 2) - (noBtn.offsetWidth / 2);
+        const initialY = 50;
+        noBtn.style.left = initialX + 'px';
+        noBtn.style.top = initialY + 'px';
+    </script>
+</body>
+</html>
